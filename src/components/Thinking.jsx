@@ -9,12 +9,15 @@ Title: Thinking emoji
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber';
 
 export default function Model(props) {
+  const Ref = useRef();
+  useFrame(state => (Ref.current.rotation.y = Math.sin(state.clock.elapsedTime)*0.1))
   const { nodes, materials } = useGLTF('/thinking.gltf')
   return (
     <group {...props} dispose={null}>
-      <group scale={0.02}>
+      <group ref={Ref} scale={0.02}>
         <mesh geometry={nodes.Object_Material_0.geometry} 
         material={materials.Material} 
         position={[-0.05, 3.11, 0]} 
