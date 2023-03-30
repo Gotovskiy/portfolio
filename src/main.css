@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Stolzl';
+    src: local('Stolzl'),
+      url('../public/fonts/stolzl_regular.otf') format('truetype');
+    font-weight: bold;
+  }
+
+  *{
+    font-family: "Stolzl";
+  }

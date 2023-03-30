@@ -39,8 +39,9 @@ font-size: 80px;
 font-weight: bold;
 cursor: pointer;
 color: transparent;
--webkit-text-stroke: 1px white;
+-webkit-text-stroke: 0.5px white;
 position: relative;
+
 
 
 ::after{
@@ -48,20 +49,18 @@ position: relative;
   position: absolute;
   top: 0;
   left: 0;
-  color: pink;
+  color: #ffffff;
+  filter: drop-shadow(0 0 40px #c9bbfa);
   width: 0px;
   overflow: hidden;
   white-space: nowrap;
+  transition: all 0.8s ease-in-out;
 }
 
 &:hover{
+
   ::after{
-    animation: moveText 0.5s linear both;
-    @keyframes moveText {
-      to{
-        width: 100%;
-      }
-    }
+   width:100%;
   }
 }
 
