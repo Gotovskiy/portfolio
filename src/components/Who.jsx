@@ -78,7 +78,7 @@ function  Hero () {
       <Container>
         <Right>
         <Canvas camera={{fov:25,position:[5,5,5]}}>
-        <OrbitControls ebableZoom={false} autoRotate/>
+        <OrbitControls enableZoom={false} autoRotate/>
         <ambientLight intensity={1}/>
         <directionalLight position={[3,2,1]}/>
         <Cube/>

@@ -16,8 +16,7 @@ function Cube() {
                 <color attach="background" args={["pink"]}/>
                 <Text ref={textRef} fontSize={3} color="#555">
                     Hello
-                </Text>
-                
+                </Text>        
             </RenderTexture>
         </meshStandardMaterial>
         </mesh>);
