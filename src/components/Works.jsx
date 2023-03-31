@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import WebDisign from "./WebDising";
 
 const data = [
-  "Web Design",
-  "Development",
-  "Illustration",
-  "Product Design",
-  "Social Media"
+  "Project Approval",
+  "Analysis",
+  "Design",
+  "Implementation",
+  "Integration"
+  ,"Maintenance"
 ]
 
 const Section = styled.div`
@@ -33,7 +35,7 @@ const Left = styled.div`
 `
 
 const ListItem = styled.div`
-font-size: 90px;
+font-size: 80px;
 font-weight: bold;
 cursor: pointer;
 color: transparent;
@@ -78,6 +80,9 @@ function Works () {
           })}
         </List>
       </Left>
+      <Right>     
+         <WebDisign/>
+      </Right>
       </Container>
     </Section> );
 }
