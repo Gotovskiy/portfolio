@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import WebDisign from "./WebDising";
+import { useState } from "react";
+import SneakerOne from "./SneakerOne"
+import SneakerTwo from "./SneakerTwo"
+import SneakerThree from "./SneakerThree"
+import SneakerFour from "./SneakerFour"
 
 const data = [
-  "Project Approval",
-  "Analysis",
-  "Design",
-  "Implementation",
-  "Integration"
-  ,"Maintenance"
+  {name:"Origin", id:1},
+  {name:"NightJinx", id:4},
+  {name:"Republic", id:2},
+  {name:"Thread", id:3},
 ]
 
 const Section = styled.div`
@@ -65,24 +68,103 @@ position: relative;
 }
 
 `
- 
   const Right = styled.div`
   flex:1;
+  position:relative;
 `
+ const Bottom = styled.div`
+  display: flex;
+  height:100px;
+  width:100px;
+  background-color:red;
+ `
+  const CartContainer = styled.div`
+  display:flex;
+  position:absolute;
+  height:50px;
+  width:200px;
+  top:85%;
+  right:40%;
+  justify-content: space-around;
+  align-items: center;
+ `
+  const Buy = styled.div`
+  display:flex;
+  height:50px;
+  width:150px;
+  background-color:none;
+  color: white;
+  border-radius:7px;
+  border:2px solid rgb(218, 78, 162);
+  cursor:pointer;
+  align-items:center;
+  text-align:center;
+  justify-content:space-between;
+  padding-right:7px;
+  margin-right:10px;
+ `
+ const Carticon = styled.i`
+ width:40px;
+ height:46px;
+ background-color:rgb(218, 78, 162);
+ margin-left:2px;
+ border-radius: 5px 0 0 5px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ `
+ const Icon = styled.i`
+ width: 20px;
+ cursor: pointer;
+`
+ const Price = styled.h1`
+ width:60px;
+ height:40px;
+ 
+ `
+
+
 function Works () {
+
+  const [model , SetModel] = useState(<SneakerOne/>);
+
+  function ChoseModel (id)  {
+    switch (id) {
+      case 1:
+        SetModel(<SneakerOne/>)
+        break;
+      case 2:
+        SetModel(<SneakerTwo/>)
+        break;
+      case 3:
+        SetModel(<SneakerThree/>)
+        break;
+        case 4:
+          SetModel(<SneakerFour/>)
+        break;
+
+  }}
+
     return ( <Section>
       <Container>
+        
       <Left>
         <List>
           {data.map((item) => {
-            return <ListItem key={item} text={item}>{item}</ListItem>
+            return <ListItem key={item.name} text={item.name} onClick={() => {ChoseModel(item.id)}}>{item.name}</ListItem>
           })}
         </List>
       </Left>
       <Right>     
-         <WebDisign/>
+         <WebDisign ChosedModel= {model}/>
+         <CartContainer>
+          <Buy><Carticon><Icon className="fa-solid fa-magnifying-glass"></Icon></Carticon>BUY NOW</Buy>
+          <Price>99$</Price>
+          </CartContainer>
       </Right>
       </Container>
+      
+      <Bottom>Hello</Bottom>
     </Section> );
 }
 
