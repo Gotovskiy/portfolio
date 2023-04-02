@@ -82,7 +82,7 @@ position: relative;
   display:flex;
   position:absolute;
   height:50px;
-  width:200px;
+  width:250px;
   top:85%;
   right:40%;
   justify-content: space-around;
@@ -91,7 +91,7 @@ position: relative;
   const Buy = styled.div`
   display:flex;
   height:50px;
-  width:150px;
+  width:130px;
   background-color:none;
   color: white;
   border-radius:7px;
@@ -100,8 +100,19 @@ position: relative;
   align-items:center;
   text-align:center;
   justify-content:space-between;
-  padding-right:7px;
-  margin-right:10px;
+  transition: all 0.8s ease-in-out;
+  :hover {
+    background-color:rgb(218, 78, 162);
+    border:solid white 2px;
+  }
+ `
+ const BuyText = styled.div`
+  white-space: nowrap;
+  overflow:hidden:
+  display:flex;
+  align-items:center;
+  text-align:center;
+  padding-right:5px;
  `
  const Carticon = styled.i`
  width:40px;
@@ -112,35 +123,40 @@ position: relative;
  display:flex;
  align-items:center;
  justify-content:center;
+
  `
  const Icon = styled.i`
  width: 20px;
  cursor: pointer;
 `
  const Price = styled.h1`
+   transition: all 0.8s ease-in-out;
  width:60px;
  height:40px;
- 
  `
 
 
 function Works () {
 
   const [model , SetModel] = useState(<SneakerOne/>);
-
+  const [modelPrice , SetPrice] = useState("99$")
   function ChoseModel (id)  {
     switch (id) {
       case 1:
         SetModel(<SneakerOne/>)
+        SetPrice("99$")
         break;
       case 2:
         SetModel(<SneakerTwo/>)
+        SetPrice("75$")
         break;
       case 3:
         SetModel(<SneakerThree/>)
+        SetPrice("110$")
         break;
         case 4:
           SetModel(<SneakerFour/>)
+          SetPrice("95$")
         break;
 
   }}
@@ -158,8 +174,15 @@ function Works () {
       <Right>     
          <WebDisign ChosedModel= {model}/>
          <CartContainer>
-          <Buy><Carticon><Icon className="fa-solid fa-magnifying-glass"></Icon></Carticon>BUY NOW</Buy>
-          <Price>99$</Price>
+          <Buy>
+          <Carticon>
+            <Icon className="fa-solid fa-cart-shopping"/ >
+          </Carticon>
+          <BuyText>
+            BUY NOW
+          </BuyText>
+        </Buy>
+          <Price>{modelPrice}</Price>
           </CartContainer>
       </Right>
       </Container>
