@@ -17,12 +17,9 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF('/thinking.gltf')
   return (
     <group {...props} dispose={null}>
-      <group ref={Ref} scale={0.02}>
+      <group ref={Ref} scale={1.02}>
         <mesh geometry={nodes.Object_Material_0.geometry} 
-        material={materials.Material} 
-        position={[-0.05, 3.11, 0]} 
-        rotation={[-Math.PI / 2.2, 0, 0]} 
-        scale={108.34} />
+        material={materials.Material}  />
       </group>
     </group>
   )

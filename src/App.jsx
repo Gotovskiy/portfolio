@@ -4,7 +4,7 @@ import Who from "./components/Who"
 import Works from "./components/Works"
 import styled from "styled-components"
 
-
+import "./main.css"
 function App() {
 
   const Container = styled.div`
