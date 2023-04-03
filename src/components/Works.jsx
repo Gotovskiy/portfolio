@@ -8,10 +8,10 @@ import SneakerThree from "./SneakerThree"
 import SneakerFour from "./SneakerFour"
 
 const data = [
-  {name:"Origin", id:1},
-  {name:"NightJinx", id:4},
-  {name:"Republic", id:2},
-  {name:"Thread", id:3},
+  {name:"Origin", id:1 , chosed:false },
+  {name:"Crown", id:4 , chosed:false },
+  {name:"Republic", id:2 , chosed:false },
+  {name:"Thread", id:3 ,  chosed:false },
 ]
 
 const Section = styled.div`
@@ -39,11 +39,16 @@ const Left = styled.div`
 
 const ListItem = styled.div`
 font-size: 80px;
+width:90%;
 font-weight: bold;
 cursor: pointer;
 color: transparent;
 -webkit-text-stroke: 0.5px white;
 position: relative;
+border-radius:10px;
+transition: all 0.8s ease-in-out;
+padding-left:30px;
+padding-top:10px;
 
 
 
@@ -58,6 +63,11 @@ position: relative;
   overflow: hidden;
   white-space: nowrap;
   transition: all 0.8s ease-in-out;
+  border-radius:15px;
+  padding-left:30px;
+  padding-top:10px;
+  padding-bottom:10px;
+  
 }
 
 &:hover{
@@ -66,19 +76,41 @@ position: relative;
    width:100%;
   }
 }
+&.active{
+  ::after{
+   width:100%;
+   filter: drop-shadow( 0 0 40px #00d9ff);
+   background-color:#00d9ff1f;
+  }}
 
 `
   const Right = styled.div`
   flex:1;
   position:relative;
 `
- const Bottom = styled.div`
+ const Cart = styled.div`
+ position:absolute;
+ top:30px;
+ right:5px;
   display: flex;
-  height:100px;
-  width:100px;
-  background-color:red;
+  height:50px;
+  width:50px;
+  border: 2px solid rgb(255, 255, 255 , 0.4);
+  border-radius:50px;
+  align-items:center;
+  text-align:center;
+  justify-content:center;
+  transition: all 0.8s ease-in-out;
+  padding:0 20px;
+  &.active {
+    border-radius:25px;
+    justify-content:space-around;
+  }
+  & > * {
+   margin-right:10px;
+  }
  `
-  const CartContainer = styled.div`
+  const BuyContainer = styled.div`
   display:flex;
   position:absolute;
   height:50px;
@@ -102,20 +134,34 @@ position: relative;
   justify-content:space-between;
   transition: all 0.8s ease-in-out;
   :hover {
-    background-color:rgb(218, 78, 162);
-    border:solid white 2px;
+    border:2px solid rgb(253, 253, 253);
+    filter: drop-shadow( 0 0 40px #00d9ff);
+  }
+  :hover > i {
+    background-color:#006eff9b;
+    border:2px 0 2px 2px solid white;
+  }
+  :hover > div {
+    background-color:#006eff9b;
   }
  `
  const BuyText = styled.div`
+  display:flex;
   white-space: nowrap;
+  height:46px;
+  border-radius: 0 5px 5px 0;
+  margin-right:2px;
+  width:60%;
   overflow:hidden:
   display:flex;
   align-items:center;
   text-align:center;
   padding-right:5px;
+  padding-left:5px;
+  transition: all 0.8s ease-in-out;
  `
  const Carticon = styled.i`
- width:40px;
+ width:40%;
  height:46px;
  background-color:rgb(218, 78, 162);
  margin-left:2px;
@@ -123,6 +169,7 @@ position: relative;
  display:flex;
  align-items:center;
  justify-content:center;
+ transition: all 0.8s ease-in-out;
 
  `
  const Icon = styled.i`
@@ -137,26 +184,43 @@ position: relative;
 
 
 function Works () {
-
   const [model , SetModel] = useState(<SneakerOne/>);
-  const [modelPrice , SetPrice] = useState("99$")
+  const [modelPrice , SetPrice] = useState(99);
+  const [UserCartPrice , SetCartPrice] = useState(0);
+  const [activeid , SetActive] = useState(0);
+  const [UserCart , SetCart] = useState([]);
+  const [CartClass , setCartClass] = useState("")
+
+  function AddtoCart () {
+    setCartClass("active")
+    SetCart([...UserCart , {id:activeid , price:modelPrice}])
+    const newPrice = UserCartPrice + modelPrice
+    SetCartPrice(newPrice)
+    console.log(UserCartPrice , modelPrice)
+  }
+
   function ChoseModel (id)  {
     switch (id) {
       case 1:
         SetModel(<SneakerOne/>)
-        SetPrice("99$")
+        SetPrice(99)
+        SetActive(1)
         break;
       case 2:
         SetModel(<SneakerTwo/>)
-        SetPrice("75$")
+        SetPrice(75)
+        SetActive(2)
+        
         break;
       case 3:
         SetModel(<SneakerThree/>)
-        SetPrice("110$")
+        SetPrice(110)
+        SetActive(3)
         break;
         case 4:
-          SetModel(<SneakerFour/>)
-          SetPrice("95$")
+        SetModel(<SneakerFour/>)
+        SetPrice(95)
+        SetActive(4)
         break;
 
   }}
@@ -167,14 +231,20 @@ function Works () {
       <Left>
         <List>
           {data.map((item) => {
-            return <ListItem key={item.name} text={item.name} onClick={() => {ChoseModel(item.id)}}>{item.name}</ListItem>
+            if (item.id == activeid){
+              return <ListItem key={item.name}  text={item.name} className={"active"} onClick={() => {ChoseModel(item.id)}}>{item.name}</ListItem>
+            }
+            else {
+              return <ListItem key={item.name}  text={item.name}  onClick={() => {ChoseModel(item.id)}}>{item.name}</ListItem>
+            }
+            
           })}
         </List>
       </Left>
       <Right>     
          <WebDisign ChosedModel= {model}/>
-         <CartContainer>
-          <Buy>
+         <BuyContainer>
+          <Buy onClick={() => AddtoCart()}>
           <Carticon>
             <Icon className="fa-solid fa-cart-shopping"/ >
           </Carticon>
@@ -182,12 +252,15 @@ function Works () {
             BUY NOW
           </BuyText>
         </Buy>
-          <Price>{modelPrice}</Price>
-          </CartContainer>
+          <Price>{modelPrice}$</Price>
+          </BuyContainer>
+          <Cart className={CartClass}>
+            <Icon className="fa-solid fa-cart-shopping"/ >
+            {UserCartPrice}$  
+            </Cart>
       </Right>
       </Container>
       
-      <Bottom>Hello</Bottom>
     </Section> );
 }
 
