@@ -6,13 +6,8 @@ import SneakerOne from "./SneakerOne"
 import SneakerTwo from "./SneakerTwo"
 import SneakerThree from "./SneakerThree"
 import SneakerFour from "./SneakerFour"
+import CartItem from "./CartItem";
 
-const data = [
-  {name:"Origin", id:1},
-  {name:"NightJinx", id:4},
-  {name:"Republic", id:2},
-  {name:"Thread", id:3},
-]
 
 const Section = styled.div`
     height: 100vh;
@@ -39,11 +34,16 @@ const Left = styled.div`
 
 const ListItem = styled.div`
 font-size: 80px;
+width:90%;
 font-weight: bold;
 cursor: pointer;
 color: transparent;
 -webkit-text-stroke: 0.5px white;
 position: relative;
+border-radius:10px;
+transition: all 0.8s ease-in-out;
+padding-left:30px;
+padding-top:10px;
 
 
 
@@ -58,6 +58,11 @@ position: relative;
   overflow: hidden;
   white-space: nowrap;
   transition: all 0.8s ease-in-out;
+  border-radius:15px;
+  padding-left:30px;
+  padding-top:10px;
+  padding-bottom:10px;
+  
 }
 
 &:hover{
@@ -66,97 +71,211 @@ position: relative;
    width:100%;
   }
 }
+&.active{
+  ::after{
+   width:100%;
+   filter: drop-shadow( 0 0 40px #00d9ff);
+  }}
 
 `
   const Right = styled.div`
   flex:1;
   position:relative;
 `
- const Bottom = styled.div`
-  display: flex;
-  height:100px;
-  width:100px;
-  background-color:red;
- `
-  const CartContainer = styled.div`
+
+  const BuyContainer = styled.div`
   display:flex;
   position:absolute;
-  height:50px;
+  height:80px;
   width:250px;
   top:85%;
   right:40%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
  `
-  const Buy = styled.div`
-  display:flex;
-  height:50px;
-  width:130px;
-  background-color:none;
-  color: white;
-  border-radius:7px;
-  border:2px solid rgb(218, 78, 162);
-  cursor:pointer;
-  align-items:center;
-  text-align:center;
-  justify-content:space-between;
-  transition: all 0.8s ease-in-out;
-  :hover {
-    background-color:rgb(218, 78, 162);
-    border:solid white 2px;
+const Buy = styled.button`
+background-color:#da4ea2;
+color:white;
+font-weight:500;
+width:120px;
+height:50px;
+padding:10px;
+border-radius:5px;
+border: none;
+cursor:pointer;
+  filter: drop-shadow( 0 0 40px rgb(218, 78, 162));
+  :active {
+    background-color:rgb(206, 56, 146);
   }
  `
- const BuyText = styled.div`
-  white-space: nowrap;
-  overflow:hidden:
-  display:flex;
-  align-items:center;
-  text-align:center;
-  padding-right:5px;
- `
- const Carticon = styled.i`
- width:40px;
- height:46px;
- background-color:rgb(218, 78, 162);
- margin-left:2px;
- border-radius: 5px 0 0 5px;
- display:flex;
- align-items:center;
- justify-content:center;
 
- `
  const Icon = styled.i`
  width: 20px;
  cursor: pointer;
 `
  const Price = styled.h1`
-   transition: all 0.8s ease-in-out;
  width:60px;
  height:40px;
  `
+ const Cart = styled.div`
+ position:absolute;
+ top:30px;
+ right:0px;
+ display: flex;
+ flex-direction:column;
+ height:50px;
+ width:75px;
+ border: 2px solid rgb(255, 255, 255 , 0.4);
+ border-radius:50px;
+ text-align:center;
+ transition: all 0.8s ease-in-out;
+ padding:0 20px;
+ cursor:pointer;
+ :hover {
+  * {
+  visibility:visible;
+  transition:0.5s
+  }
+ width:250px;
+ height:300px;
+ justify-content:space-between;
+ }
+`
+const CartSum = styled.div`
+width:30px;
+text-align: right;
+margin-right:4px;
+margin-left:10px;
+`
+const CartContainer = styled.div`
+margin:15px auto;
+transition: all 0.8s ease-in-out;
+  width:80%;
+  height:10%;
+  display:flex;
+  justify-content:space-between;
+`
 
+const CartItems = styled.div`
+width:100%;
+height:100%;
+margin-bottom:25px;
+overflow-y: auto;
+scrollbar-color: #ffffffb3 transparent;
+scrollbar-width: thin;
+`
+
+const SizeBox = styled.div`
+height:40px;
+width:40px; 
+position:relative;
+align-items:center;  
+`
+const ModelSize=styled.h1`
+ width:40px;
+ height:40px;
+`
+const SizeButtonPlus = styled.button`
+position:absolute;
+top:-22px;
+right:8px;
+font-size:40px;
+height:24px;
+background-color:transparent;
+border:none;
+color:white;
+cursor:pointer;
+:active {
+    color: #ffffff7f;
+  }
+`
+const SizeButtonMinus = styled.button`
+position:absolute;
+bottom:-22px;
+right:8px;
+font-size:40px;
+height:24px;
+transform: rotate(180deg);
+background-color:transparent;
+border:none;
+color:white;
+cursor:pointer;
+:active {
+    color: #ffffff7f;
+  }
+`
+
+
+
+const data = [
+  {name:"Origin", id:1 , chosed:false },
+  {name:"Crown", id:4 , chosed:false },
+  {name:"Republic", id:2 , chosed:false },
+  {name:"Thread", id:3 ,  chosed:false },
+]
 
 function Works () {
-
   const [model , SetModel] = useState(<SneakerOne/>);
-  const [modelPrice , SetPrice] = useState("99$")
-  function ChoseModel (id)  {
-    switch (id) {
-      case 1:
+  const [modelPrice , SetPrice] = useState(99);
+  const [modelSize , SetSize] = useState(42);
+  const [activeName , SetActive] = useState("Origin");
+  const [UserCartPrice , SetCartPrice] = useState(0);
+  const [UserCart , SetCart] = useState([]);
+  const [toggleCart, setToggleCart] = useState("")
+
+  function IncSize () {
+    if (modelSize < 47){SetSize(modelSize+1)}
+    
+  }
+  function DecSize () {
+    if (modelSize > 36){SetSize(modelSize-1)}
+  }
+
+  function DeleteItem (id) {
+  SetCart(
+   UserCart.filter(item => item.id!=id)) 
+  }
+
+  function AddtoCart () {
+    const itemImageSrc = `../img/${activeName}.png`
+    SetCart([...UserCart , {
+      id:Date.now(),
+      name:activeName , 
+      price:modelPrice,
+      size:modelSize,
+      img:itemImageSrc}])
+    const newPrice = UserCartPrice + modelPrice
+    SetCartPrice(newPrice)
+  }
+  function CartActive (e) {
+  toggleCart=="active"?
+  setToggleCart(""):
+  setToggleCart("active")
+   
+  }
+
+  function ChoseModel (name)  {
+    switch (name) {
+      case "Origin":
         SetModel(<SneakerOne/>)
-        SetPrice("99$")
+        SetPrice(99)
+        SetActive("Origin")
         break;
-      case 2:
+      case "Crown":
         SetModel(<SneakerTwo/>)
-        SetPrice("75$")
+        SetPrice(75)
+        SetActive("Crown")
+        
         break;
-      case 3:
+      case "Republic":
+        SetModel(<SneakerFour/>)
+        SetPrice(110)
+        SetActive("Republic")
+        break;
+        case "Thread":
         SetModel(<SneakerThree/>)
-        SetPrice("110$")
-        break;
-        case 4:
-          SetModel(<SneakerFour/>)
-          SetPrice("95$")
+        SetPrice(95)
+        SetActive("Thread")
         break;
 
   }}
@@ -167,27 +286,43 @@ function Works () {
       <Left>
         <List>
           {data.map((item) => {
-            return <ListItem key={item.name} text={item.name} onClick={() => {ChoseModel(item.id)}}>{item.name}</ListItem>
+            if (item.id == activeName){
+              return <ListItem key={item.name}  text={item.name} className={"active"} onClick={() => {ChoseModel(item.name)}}>{item.name}</ListItem>
+            }
+            else {
+              return <ListItem key={item.name}  text={item.name}  onClick={() => {ChoseModel(item.name)}}>{item.name}</ListItem>
+            }
+            
           })}
         </List>
       </Left>
       <Right>     
          <WebDisign ChosedModel= {model}/>
-         <CartContainer>
-          <Buy>
-          <Carticon>
-            <Icon className="fa-solid fa-cart-shopping"/ >
-          </Carticon>
-          <BuyText>
-            BUY NOW
-          </BuyText>
+         <BuyContainer>
+         <SizeBox>
+          <SizeButtonPlus onClick={IncSize}>^</SizeButtonPlus>
+          <ModelSize>{modelSize}</ModelSize>
+          <SizeButtonMinus onClick={DecSize}>^</SizeButtonMinus>
+        </SizeBox>
+         <Buy onClick={() => AddtoCart()}>
+         <Icon className="fa-solid fa-cart-shopping"/ >
+            Buy
         </Buy>
-          <Price>{modelPrice}</Price>
-          </CartContainer>
+          <Price>{modelPrice}$</Price>
+          </BuyContainer>
+          <Cart className={toggleCart}>
+            <CartContainer>
+            <Icon className="fa-solid fa-cart-shopping"/ >
+            <CartSum>{UserCartPrice}$ </CartSum> 
+            </CartContainer> 
+            <CartItems>{UserCart.map((item) => {
+              console.log(item)
+              return  <CartItem item={item} DeleteItem={DeleteItem}/>
+            })}</CartItems> 
+            </Cart>
       </Right>
       </Container>
       
-      <Bottom>Hello</Bottom>
     </Section> );
 }
 
