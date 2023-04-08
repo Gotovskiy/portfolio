@@ -6,6 +6,7 @@ import SneakerOne from "./SneakerOne"
 import SneakerTwo from "./SneakerTwo"
 import SneakerThree from "./SneakerThree"
 import SneakerFour from "./SneakerFour"
+import CartItem from "./CartItem";
 
 
 const Section = styled.div`
@@ -85,11 +86,11 @@ padding-top:10px;
   const BuyContainer = styled.div`
   display:flex;
   position:absolute;
-  height:50px;
+  height:80px;
   width:250px;
   top:85%;
   right:40%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
  `
 const Buy = styled.button`
@@ -113,7 +114,6 @@ cursor:pointer;
  cursor: pointer;
 `
  const Price = styled.h1`
-   transition: all 0.8s ease-in-out;
  width:60px;
  height:40px;
  `
@@ -131,12 +131,14 @@ cursor:pointer;
  transition: all 0.8s ease-in-out;
  padding:0 20px;
  cursor:pointer;
- &.active {
+ :hover {
+  * {
+  visibility:visible;
+  transition:0.5s
+  }
  width:250px;
  height:300px;
  justify-content:space-between;
- }
- &.active > * {
  }
 `
 const CartSum = styled.div`
@@ -162,15 +164,48 @@ overflow-y: auto;
 scrollbar-color: #ffffffb3 transparent;
 scrollbar-width: thin;
 `
-const CartItem = styled.div`
-margin-right:10px;
-width:98%;
-height:20%; 
-margin-top:2px;
+
+const SizeBox = styled.div`
+height:40px;
+width:40px; 
+position:relative;
+align-items:center;  
 `
-const CartImg = styled.img`
-height:90%;
+const ModelSize=styled.h1`
+ width:40px;
+ height:40px;
 `
+const SizeButtonPlus = styled.button`
+position:absolute;
+top:-22px;
+right:8px;
+font-size:40px;
+height:24px;
+background-color:transparent;
+border:none;
+color:white;
+cursor:pointer;
+:active {
+    color: #ffffff7f;
+  }
+`
+const SizeButtonMinus = styled.button`
+position:absolute;
+bottom:-22px;
+right:8px;
+font-size:40px;
+height:24px;
+transform: rotate(180deg);
+background-color:transparent;
+border:none;
+color:white;
+cursor:pointer;
+:active {
+    color: #ffffff7f;
+  }
+`
+
+
 
 const data = [
   {name:"Origin", id:1 , chosed:false },
@@ -187,9 +222,24 @@ function Works () {
   const [UserCartPrice , SetCartPrice] = useState(0);
   const [UserCart , SetCart] = useState([]);
   const [toggleCart, setToggleCart] = useState("")
+
+  function IncSize () {
+    if (modelSize < 47){SetSize(modelSize+1)}
+    
+  }
+  function DecSize () {
+    if (modelSize > 36){SetSize(modelSize-1)}
+  }
+
+  function DeleteItem (id) {
+  SetCart(
+   UserCart.filter(item => item.id!=id)) 
+  }
+
   function AddtoCart () {
     const itemImageSrc = `../img/${activeName}.png`
     SetCart([...UserCart , {
+      id:Date.now(),
       name:activeName , 
       price:modelPrice,
       size:modelSize,
@@ -197,8 +247,10 @@ function Works () {
     const newPrice = UserCartPrice + modelPrice
     SetCartPrice(newPrice)
   }
-  function CartActive () {
-  toggleCart=="active"?setToggleCart(""):setToggleCart("active")
+  function CartActive (e) {
+  toggleCart=="active"?
+  setToggleCart(""):
+  setToggleCart("active")
    
   }
 
@@ -247,24 +299,25 @@ function Works () {
       <Right>     
          <WebDisign ChosedModel= {model}/>
          <BuyContainer>
-          <Buy onClick={() => AddtoCart()}>
-            <Icon className="fa-solid fa-cart-shopping"/ >
+         <SizeBox>
+          <SizeButtonPlus onClick={IncSize}>^</SizeButtonPlus>
+          <ModelSize>{modelSize}</ModelSize>
+          <SizeButtonMinus onClick={DecSize}>^</SizeButtonMinus>
+        </SizeBox>
+         <Buy onClick={() => AddtoCart()}>
+         <Icon className="fa-solid fa-cart-shopping"/ >
             Buy
         </Buy>
           <Price>{modelPrice}$</Price>
           </BuyContainer>
-          <Cart className={toggleCart} onClick={() => CartActive()}>
+          <Cart className={toggleCart}>
             <CartContainer>
             <Icon className="fa-solid fa-cart-shopping"/ >
             <CartSum>{UserCartPrice}$ </CartSum> 
             </CartContainer> 
             <CartItems>{UserCart.map((item) => {
               console.log(item)
-              return <CartItem>
-                <CartImg src={item.img}/>
-                {item.name}
-                {item.price}
-              </CartItem>
+              return  <CartItem item={item} DeleteItem={DeleteItem}/>
             })}</CartItems> 
             </Cart>
       </Right>
