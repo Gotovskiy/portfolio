@@ -87,7 +87,7 @@ padding-top:10px;
   display:flex;
   position:absolute;
   height:80px;
-  width:250px;
+  width:340px;
   top:85%;
   right:40%;
   justify-content: space-between;
@@ -167,18 +167,19 @@ scrollbar-width: thin;
 
 const SizeBox = styled.div`
 height:40px;
-width:40px; 
+width:120px; 
 position:relative;
 align-items:center;  
+display: flex;
 `
 const ModelSize=styled.h1`
- width:40px;
+ width:120px;
  height:40px;
 `
 const SizeButtonPlus = styled.button`
 position:absolute;
 top:-22px;
-right:8px;
+right:10px;
 font-size:40px;
 height:24px;
 background-color:transparent;
@@ -192,7 +193,7 @@ cursor:pointer;
 const SizeButtonMinus = styled.button`
 position:absolute;
 bottom:-22px;
-right:8px;
+right: 10px;
 font-size:40px;
 height:24px;
 transform: rotate(180deg);
@@ -219,7 +220,7 @@ function Works () {
   const [modelPrice , SetPrice] = useState(99);
   const [modelSize , SetSize] = useState(42);
   const [activeName , SetActive] = useState("Origin");
-  const [UserCartPrice , SetCartPrice] = useState(0);
+  const [UserCartPrice , SetCartPrice] = useState(0);  
   const [UserCart , SetCart] = useState([]);
   const [toggleCart, setToggleCart] = useState("")
 
@@ -243,16 +244,33 @@ function Works () {
       name:activeName , 
       price:modelPrice,
       size:modelSize,
-      img:itemImageSrc}])
+      img:itemImageSrc,
+      count:1}])
     const newPrice = UserCartPrice + modelPrice
+    console.log(UserCart)
     SetCartPrice(newPrice)
   }
-  function CartActive (e) {
-  toggleCart=="active"?
-  setToggleCart(""):
-  setToggleCart("active")
-   
-  }
+
+    function ChangeCount (id , operation) {
+      console.log("works" , id , operation)
+      const index = UserCart.findIndex((item) => item.id === id);
+      const old_obj = UserCart[index];
+      let newItem;
+      if (operation === "inc") {
+        newItem = { ...old_obj, count: count++ };
+      }
+      else if (old_obj.count !== 1 && operation === "dec") {
+        newItem = { ...old_obj, count: count-- };
+      }
+      
+      const newArr = [
+        ...UserCart.slice(0, index),
+        newItem,
+        ...UserCart.slice(index + 1),
+      ]
+      console.log(newArr)
+      SetCart(newArr)
+    }
 
   function ChoseModel (name)  {
     switch (name) {
@@ -301,7 +319,7 @@ function Works () {
          <BuyContainer>
          <SizeBox>
           <SizeButtonPlus onClick={IncSize}>^</SizeButtonPlus>
-          <ModelSize>{modelSize}</ModelSize>
+          <ModelSize>Size {modelSize}</ModelSize>
           <SizeButtonMinus onClick={DecSize}>^</SizeButtonMinus>
         </SizeBox>
          <Buy onClick={() => AddtoCart()}>
@@ -316,8 +334,7 @@ function Works () {
             <CartSum>{UserCartPrice}$ </CartSum> 
             </CartContainer> 
             <CartItems>{UserCart.map((item) => {
-              console.log(item)
-              return  <CartItem item={item} DeleteItem={DeleteItem}/>
+              return  <CartItem item={item} DeleteItem={DeleteItem} ChangeCount={ChangeCount}/>
             })}</CartItems> 
             </Cart>
       </Right>
