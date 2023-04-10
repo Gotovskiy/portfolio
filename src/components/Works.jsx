@@ -222,7 +222,6 @@ function Works () {
   const [activeName , SetActive] = useState("Origin");
   const [UserCartPrice , SetCartPrice] = useState(0);  
   const [UserCart , SetCart] = useState([]);
-  const [toggleCart, setToggleCart] = useState("")
 
   function IncSize () {
     if (modelSize < 47){SetSize(modelSize+1)}
@@ -233,8 +232,28 @@ function Works () {
   }
 
   function DeleteItem (id) {
+  let deletedItem = UserCart.filter(item => item.id==id);
+  const newPrice = UserCartPrice - deletedItem[0].price * deletedItem[0].count;
+  SetCartPrice(newPrice);
   SetCart(
    UserCart.filter(item => item.id!=id)) 
+  }
+
+  function CartCheck () {
+   if (UserCart.length === 0 ){
+    AddtoCart();
+   }
+   else {
+     UserCart.map((item) => {
+      if (Object.values(item).includes(activeName) && Object.values(item).includes(modelSize)) {
+        ChangeCount(item.id , "inc");
+        return;
+      }
+      else {
+        AddtoCart();
+      }
+     })
+   } 
   }
 
   function AddtoCart () {
@@ -252,17 +271,26 @@ function Works () {
   }
 
     function ChangeCount (id , operation) {
-      console.log("works" , id , operation)
       const index = UserCart.findIndex((item) => item.id === id);
       const old_obj = UserCart[index];
-      let newItem;
-      if (operation === "inc") {
-        newItem = { ...old_obj, count: count++ };
+      let newItem = {};
+      let newCount = old_obj.count;
+      let newPrice = UserCartPrice;
+      if (operation == "inc") {
+        ++newCount
+        newItem = { ...old_obj, count: newCount };
+        newPrice += old_obj.price; 
+        SetCartPrice(newPrice)
       }
-      else if (old_obj.count !== 1 && operation === "dec") {
-        newItem = { ...old_obj, count: count-- };
+      else if (old_obj.count !== 1 && operation == "dec") {
+        --newCount;
+        newItem = { ...old_obj, count: newCount };
+        newPrice -= old_obj.price; 
+        SetCartPrice(newPrice)
       }
-      
+      else {
+        return
+      }
       const newArr = [
         ...UserCart.slice(0, index),
         newItem,
@@ -322,13 +350,13 @@ function Works () {
           <ModelSize>Size {modelSize}</ModelSize>
           <SizeButtonMinus onClick={DecSize}>^</SizeButtonMinus>
         </SizeBox>
-         <Buy onClick={() => AddtoCart()}>
+         <Buy onClick={() => CartCheck()}>
          <Icon className="fa-solid fa-cart-shopping"/ >
             Buy
         </Buy>
           <Price>{modelPrice}$</Price>
           </BuyContainer>
-          <Cart className={toggleCart}>
+          <Cart>
             <CartContainer>
             <Icon className="fa-solid fa-cart-shopping"/ >
             <CartSum>{UserCartPrice}$ </CartSum> 

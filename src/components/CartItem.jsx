@@ -94,9 +94,9 @@ function CartItem({item , DeleteItem , ChangeCount}) {
     <ButtonBox>
         <DeleteButton onClick={() => DeleteItem(item.id)}>X</DeleteButton>
         <Btngroup>
-        <CountButton onClick={() => ChangeCount(item.id , "inc")}>-</CountButton>
-        <Count>1</Count>
-        <CountButton onClick={() => ChangeCount(item.id , "dec")}>+</CountButton>
+        <CountButton onClick={() => ChangeCount(item.id , "dec")}>-</CountButton>
+        <Count>{item.count}</Count>
+        <CountButton onClick={() => ChangeCount(item.id , "inc")}>+</CountButton>
         </Btngroup>
         
      </ButtonBox>
