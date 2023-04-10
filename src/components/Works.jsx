@@ -87,7 +87,7 @@ padding-top:10px;
   display:flex;
   position:absolute;
   height:80px;
-  width:250px;
+  width:340px;
   top:85%;
   right:40%;
   justify-content: space-between;
@@ -167,18 +167,19 @@ scrollbar-width: thin;
 
 const SizeBox = styled.div`
 height:40px;
-width:40px; 
+width:120px; 
 position:relative;
 align-items:center;  
+display: flex;
 `
 const ModelSize=styled.h1`
- width:40px;
+ width:120px;
  height:40px;
 `
 const SizeButtonPlus = styled.button`
 position:absolute;
 top:-22px;
-right:8px;
+right:10px;
 font-size:40px;
 height:24px;
 background-color:transparent;
@@ -192,7 +193,7 @@ cursor:pointer;
 const SizeButtonMinus = styled.button`
 position:absolute;
 bottom:-22px;
-right:8px;
+right: 10px;
 font-size:40px;
 height:24px;
 transform: rotate(180deg);
@@ -219,9 +220,8 @@ function Works () {
   const [modelPrice , SetPrice] = useState(99);
   const [modelSize , SetSize] = useState(42);
   const [activeName , SetActive] = useState("Origin");
-  const [UserCartPrice , SetCartPrice] = useState(0);
+  const [UserCartPrice , SetCartPrice] = useState(0);  
   const [UserCart , SetCart] = useState([]);
-  const [toggleCart, setToggleCart] = useState("")
 
   function IncSize () {
     if (modelSize < 47){SetSize(modelSize+1)}
@@ -232,8 +232,28 @@ function Works () {
   }
 
   function DeleteItem (id) {
+  let deletedItem = UserCart.filter(item => item.id==id);
+  const newPrice = UserCartPrice - deletedItem[0].price * deletedItem[0].count;
+  SetCartPrice(newPrice);
   SetCart(
    UserCart.filter(item => item.id!=id)) 
+  }
+
+  function CartCheck () {
+   if (UserCart.length === 0 ){
+    AddtoCart();
+   }
+   else {
+     UserCart.map((item) => {
+      if (Object.values(item).includes(activeName) && Object.values(item).includes(modelSize)) {
+        ChangeCount(item.id , "inc");
+        return;
+      }
+      else {
+        AddtoCart();
+      }
+     })
+   } 
   }
 
   function AddtoCart () {
@@ -243,16 +263,42 @@ function Works () {
       name:activeName , 
       price:modelPrice,
       size:modelSize,
-      img:itemImageSrc}])
+      img:itemImageSrc,
+      count:1}])
     const newPrice = UserCartPrice + modelPrice
+    console.log(UserCart)
     SetCartPrice(newPrice)
   }
-  function CartActive (e) {
-  toggleCart=="active"?
-  setToggleCart(""):
-  setToggleCart("active")
-   
-  }
+
+    function ChangeCount (id , operation) {
+      const index = UserCart.findIndex((item) => item.id === id);
+      const old_obj = UserCart[index];
+      let newItem = {};
+      let newCount = old_obj.count;
+      let newPrice = UserCartPrice;
+      if (operation == "inc") {
+        ++newCount
+        newItem = { ...old_obj, count: newCount };
+        newPrice += old_obj.price; 
+        SetCartPrice(newPrice)
+      }
+      else if (old_obj.count !== 1 && operation == "dec") {
+        --newCount;
+        newItem = { ...old_obj, count: newCount };
+        newPrice -= old_obj.price; 
+        SetCartPrice(newPrice)
+      }
+      else {
+        return
+      }
+      const newArr = [
+        ...UserCart.slice(0, index),
+        newItem,
+        ...UserCart.slice(index + 1),
+      ]
+      console.log(newArr)
+      SetCart(newArr)
+    }
 
   function ChoseModel (name)  {
     switch (name) {
@@ -301,23 +347,22 @@ function Works () {
          <BuyContainer>
          <SizeBox>
           <SizeButtonPlus onClick={IncSize}>^</SizeButtonPlus>
-          <ModelSize>{modelSize}</ModelSize>
+          <ModelSize>Size {modelSize}</ModelSize>
           <SizeButtonMinus onClick={DecSize}>^</SizeButtonMinus>
         </SizeBox>
-         <Buy onClick={() => AddtoCart()}>
+         <Buy onClick={() => CartCheck()}>
          <Icon className="fa-solid fa-cart-shopping"/ >
             Buy
         </Buy>
           <Price>{modelPrice}$</Price>
           </BuyContainer>
-          <Cart className={toggleCart}>
+          <Cart>
             <CartContainer>
             <Icon className="fa-solid fa-cart-shopping"/ >
             <CartSum>{UserCartPrice}$ </CartSum> 
             </CartContainer> 
             <CartItems>{UserCart.map((item) => {
-              console.log(item)
-              return  <CartItem item={item} DeleteItem={DeleteItem}/>
+              return  <CartItem item={item} DeleteItem={DeleteItem} ChangeCount={ChangeCount}/>
             })}</CartItems> 
             </Cart>
       </Right>

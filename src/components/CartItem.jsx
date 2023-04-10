@@ -80,7 +80,7 @@ const DeleteButton = styled.button`
 `
 
 
-function CartItem({item , DeleteItem}) {
+function CartItem({item , DeleteItem , ChangeCount}) {
     return (
     <CartItemContainer key={item.id}>
          <CartImg 
@@ -94,9 +94,9 @@ function CartItem({item , DeleteItem}) {
     <ButtonBox>
         <DeleteButton onClick={() => DeleteItem(item.id)}>X</DeleteButton>
         <Btngroup>
-        <CountButton>-</CountButton>
-        <Count>1</Count>
-        <CountButton>+</CountButton>
+        <CountButton onClick={() => ChangeCount(item.id , "dec")}>-</CountButton>
+        <Count>{item.count}</Count>
+        <CountButton onClick={() => ChangeCount(item.id , "inc")}>+</CountButton>
         </Btngroup>
         
      </ButtonBox>
