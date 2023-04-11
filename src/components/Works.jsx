@@ -97,7 +97,7 @@ const Buy = styled.button`
 background-color:#da4ea2;
 color:white;
 font-weight:500;
-width:120px;
+width:130px;
 height:50px;
 padding:10px;
 border-radius:5px;
@@ -124,19 +124,18 @@ cursor:pointer;
  display: flex;
  flex-direction:column;
  height:50px;
- width:75px;
+ width:95px;
  border: 2px solid rgb(255, 255, 255 , 0.4);
  border-radius:50px;
  text-align:center;
- transition: all 0.8s ease-in-out;
+ transition: width 0.8s ease-in-out, height 0.8s 0.8s ease-in-out;
  padding:0 20px;
  cursor:pointer;
  :hover {
   * {
   visibility:visible;
-  transition:0.5s
   }
- width:250px;
+ width:270px;
  height:300px;
  justify-content:space-between;
  }
@@ -161,6 +160,7 @@ width:100%;
 height:100%;
 margin-bottom:25px;
 overflow-y: auto;
+overflow-x:hidden;
 scrollbar-color: #ffffffb3 transparent;
 scrollbar-width: thin;
 `
@@ -175,11 +175,12 @@ display: flex;
 const ModelSize=styled.h1`
  width:120px;
  height:40px;
+ margin-left: 2px;
 `
 const SizeButtonPlus = styled.button`
 position:absolute;
-top:-22px;
-right:10px;
+top:-25px;
+right:11px;
 font-size:40px;
 height:24px;
 background-color:transparent;
@@ -192,7 +193,7 @@ cursor:pointer;
 `
 const SizeButtonMinus = styled.button`
 position:absolute;
-bottom:-22px;
+bottom:-25px;
 right: 10px;
 font-size:40px;
 height:24px;
@@ -352,7 +353,7 @@ function Works () {
         </SizeBox>
          <Buy onClick={() => CartCheck()}>
          <Icon className="fa-solid fa-cart-shopping"/ >
-            Buy
+           Add to cart
         </Buy>
           <Price>{modelPrice}$</Price>
           </BuyContainer>

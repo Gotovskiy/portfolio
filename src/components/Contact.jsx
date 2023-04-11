@@ -93,7 +93,7 @@ function Contact() {
       <Container>
       <Left>
         <Form onSubmit={handleSubmit} ref={form}>
-        <Title>Contact Us</Title>
+        <Title>Create order</Title>
         <Input placeholder="Name" name="name"/>
         <Input placeholder="Email" name="email"/>
         <TextArea placeholder="Write your message" rows={10} name="message"/>
