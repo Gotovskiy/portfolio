@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import styled from "styled-components";
 import Map from "./map";
 import emailjs from '@emailjs/browser';
@@ -71,14 +71,11 @@ flex: 1;
 `
 
 
-
-function Contact() {
+function Contact({}, innerRef) {
   const form = useRef();
   const [succses,setSuccses] = useState(null);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     emailjs.sendForm('service_4l84xyj', 'template_96slbx8', form.current, 'HpTACSndSnSlSgBNt')
     .then((result) => {
         console.log(result.text);
@@ -88,12 +85,12 @@ function Contact() {
       console.log(error.text);
     });
   }
-    return ( <Section>
+    return ( <Section innerRef={innerRef}>
       
       <Container>
       <Left>
         <Form onSubmit={handleSubmit} ref={form}>
-        <Title>Create order</Title>
+        <Title >Create order</Title>
         <Input placeholder="Name" name="name"/>
         <Input placeholder="Email" name="email"/>
         <TextArea placeholder="Write your message" rows={10} name="message"/>
@@ -103,8 +100,7 @@ function Contact() {
       </Left>
       <Right><Map/></Right>
       </Container>
-      
       </Section> );
 }
 
-export default Contact;
+export default forwardRef(Contact) ;

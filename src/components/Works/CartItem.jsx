@@ -6,7 +6,7 @@ display:flex;
 align-items:center;
 text-align:center;
 margin-right:10px;
-width:240px;
+width:270px;
 height:55px; 
 margin-top:2px;
 justify-content:space-between;
@@ -76,7 +76,7 @@ const DeleteButton = styled.button`
     border:none;
     background-color:transparent;
     color:white;
-    font-size:10px;
+    font-size:12px;
     cursor:pointer;
 `
 

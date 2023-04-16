@@ -92,7 +92,7 @@ cursor:pointer;
 
 
 
-function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice,UserCart,DeleteItem,ChangeCount,UserCartPrice}) {
+function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice,UserCart,DeleteItem,ChangeCount,UserCartPrice,handleClickScroll}) {
     return ( 
     <Right>     
         <WebDisign ChosedModel= {model}/>
@@ -108,7 +108,7 @@ function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice,UserCar
        </Buy>
          <Price>{modelPrice}$</Price>
          </BuyContainer>
-         <CartBox UserCart={UserCart}  DeleteItem={DeleteItem}  ChangeCount={ChangeCount} UserCartPrice={UserCartPrice}/>
+         <CartBox handleClickScroll={handleClickScroll} UserCart={UserCart}  DeleteItem={DeleteItem}  ChangeCount={ChangeCount} UserCartPrice={UserCartPrice}/>
      </Right> );
 }
 

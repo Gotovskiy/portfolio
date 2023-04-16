@@ -30,7 +30,7 @@ const data = [
   {name:"Thread", id:3 ,  chosed:false },
 ]
 
-function Works () {
+function Works ({handleClickScroll}) {
   const [model , SetModel] = useState(<SneakerOne/>);
   const [modelPrice , SetPrice] = useState(99);
   const [modelSize , SetSize] = useState(42);
@@ -147,7 +147,8 @@ function Works () {
         data={data} 
         ChoseModel={ChoseModel} 
         activeName={activeName}/>
-        <RightSide 
+        <RightSide
+        handleClickScroll={handleClickScroll} 
         model={model} 
         IncSize={IncSize} 
         DecSize={DecSize} 

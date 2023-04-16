@@ -5,7 +5,7 @@ import CartItem from "./CartItem";
 const Cart = styled.div`
 position:absolute;
 top:30px;
-right:0px;
+right:-100px;
 display: flex;
 flex-direction:column;
 height:50px;
@@ -13,40 +13,51 @@ width:95px;
 border: 2px solid rgb(255, 255, 255 , 0.4);
 border-radius:50px;
 text-align:center;
-
 padding:0 20px;
 cursor:pointer;
 &:hover {
-width:270px;
-height:300px;
+width:300px;
+height:320px;
 justify-content:space-between;
-transition: width 0.4s ease-in-out, height 0.4s 0.5s ease-in-out;
+transition: width 0.3s ease-in-out, height 0.3s 0.4s ease-in-out;
 }
 &:hover >.CartItems {
   scrollbar-color: #ffffff89 transparent;
   transition: scrollbar-color 0.1s 0.8s linear;
 }
-&:hover >.order-btn {
-width: 50%;
- height: 25%;
- border: 1px;
-}
 &:not(:hover) >.CartItems {
-  
+  scrollbar-color: rgba(255, 225, 255, 0) transparent;
+  transition: scrollbar-color 0.1s 0.1s linear;
+}  
+
+&:hover> div >.order-btn {
+ height: 100%;
+ border: 1px;
+ opacity: 1;
+ visibility: visible;
+ transition: opacity 0.4s 0.5s ease-in-out;
+}
+&:not(:hover) div >.order-btn {
+  transition: opacity 0.4s ease-in-out;
 }  
 &:not(:hover){
 transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
 }
 `
 const CartSum = styled.div`
-width: 10px;
-text-align: center;
+width: 40px;
+text-align: right;
+display: flex;
+align-items: right;
 `
 const CartContainer = styled.div`
-margin:15px auto;
- width:80%;
+ margin:10px auto;
+ width:90%;
  height:10%;
+ min-width: 80px;
+ min-height: 30px;
  display:flex;
+ align-items: center;
  justify-content:space-between;
 `
 
@@ -61,9 +72,31 @@ scrollbar-color: rgba(255, 255, 255, 0) transparent;
 scrollbar-width: thin;
 `
 const Icon = styled.i`
-width: 10px;
+width: 30px;
+height: 30px;
 cursor: pointer;
+display: flex;
+align-items: center;
 `
+const OrderButton = styled.button`
+ width: 130px;
+ height: 100%;
+ border: 0px;
+ overflow: hidden;
+ margin: 0 auto;
+ opacity: 0;
+ visibility: 0;
+ background-color:#da4ea2;
+color:white;
+font-weight:500;
+border-radius:5px;
+border: none;
+cursor:pointer;
+filter: drop-shadow( 0 0 40px rgb(218, 78, 162));
+:active {
+  background-color:rgb(206, 56, 146);
+}`
+
 const EmptyCart = styled.div`
  width:240px;
  height:55px; 
@@ -71,27 +104,22 @@ const EmptyCart = styled.div`
  margin: 20px auto;
  align-items: center;
 `
-const OrderButton = styled.button`
- width: 0%;
- height: 0%;
- border: 0px;
- overflow: hidden;
- color:red;
-`
 
 
-function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice}) {
+
+
+function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice, handleClickScroll}) {
   console.log(UserCart)
 return ( <Cart>
       <CartContainer>
       <Icon className="fa-solid fa-cart-shopping"/ >
-      <OrderButton className="order-btn">Create Order</OrderButton>  
-      <CartSum>{UserCartPrice}$ </CartSum>
+      <OrderButton className="order-btn" onClick={() => {handleClickScroll}}>Create Order</OrderButton>  
+      <CartSum>{UserCartPrice}$</CartSum>
       </CartContainer> 
       <CartItems className="CartItems">
         {UserCart.length!==0 ?
         UserCart.map((item) => {return  <CartItem item={item} DeleteItem={DeleteItem} ChangeCount={ChangeCount}/>}):
-        <EmptyCart>Your cart empty</EmptyCart>
+        <EmptyCart>Your cart is empty</EmptyCart>
       }
         </CartItems> 
 </Cart> );

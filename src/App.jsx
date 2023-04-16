@@ -3,10 +3,10 @@ import Hero from "./components/Hero"
 import Who from "./components/Who"
 import Works from "./components/Works/Works"
 import styled from "styled-components"
-
+import React from "react"
 import "./main.css"
+import { useRef } from "react"
 function App() {
-
   const Container = styled.div`
     height: 100vh;
     scroll-snap-type: y mandatory;
@@ -19,13 +19,16 @@ function App() {
       display: none;
     }
   `
-
+  const handleClickScroll = () => {
+    innerRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const innerRef = useRef(null)
   return (
     <Container>
       <Hero/>
       <Who/>
-      <Works/>
-      <Contact/>
+      <Works handleClickScroll= {handleClickScroll}/>
+      <Contact innerRef={innerRef}/>
     </Container>
   )
 }
