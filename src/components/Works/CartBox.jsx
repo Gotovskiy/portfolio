@@ -26,19 +26,21 @@ transition: width 0.4s ease-in-out, height 0.4s 0.5s ease-in-out;
   scrollbar-color: #ffffff89 transparent;
   transition: scrollbar-color 0.1s 0.8s linear;
 }
+&:hover >.order-btn {
+width: 50%;
+ height: 25%;
+ border: 1px;
+}
 &:not(:hover) >.CartItems {
-  scrollbar-color: rgba(255, 255, 255, 0) transparent;
-  transition: scrollbar-color 0.1s 0.1s linear;
+  
 }  
 &:not(:hover){
 transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
 }
 `
 const CartSum = styled.div`
-width:30px;
-text-align: right;
-margin-right:4px;
-margin-left:10px;
+width: 10px;
+text-align: center;
 `
 const CartContainer = styled.div`
 margin:15px auto;
@@ -59,7 +61,7 @@ scrollbar-color: rgba(255, 255, 255, 0) transparent;
 scrollbar-width: thin;
 `
 const Icon = styled.i`
-width: 20px;
+width: 10px;
 cursor: pointer;
 `
 const EmptyCart = styled.div`
@@ -69,6 +71,13 @@ const EmptyCart = styled.div`
  margin: 20px auto;
  align-items: center;
 `
+const OrderButton = styled.button`
+ width: 0%;
+ height: 0%;
+ border: 0px;
+ overflow: hidden;
+ color:red;
+`
 
 
 function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice}) {
@@ -76,7 +85,8 @@ function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice}) {
 return ( <Cart>
       <CartContainer>
       <Icon className="fa-solid fa-cart-shopping"/ >
-      <CartSum>{UserCartPrice}$ </CartSum> 
+      <OrderButton className="order-btn">Create Order</OrderButton>  
+      <CartSum>{UserCartPrice}$ </CartSum>
       </CartContainer> 
       <CartItems className="CartItems">
         {UserCart.length!==0 ?

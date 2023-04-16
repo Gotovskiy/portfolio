@@ -14,7 +14,6 @@ background-color:#0000003e;
 border:none;
 padding:10px;
 overflow: hidden;
-scroll-snap-align: center;
 `
 const ItemBox = styled.div`
 height:100%;

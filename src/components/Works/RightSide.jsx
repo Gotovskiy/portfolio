@@ -46,7 +46,7 @@ height:40px;
 
 const SizeBox = styled.div`
 height:40px;
-width:120px; 
+width:125px; 
 position:relative;
 align-items:center;  
 display: flex;
@@ -58,8 +58,8 @@ margin-left: 2px;
 `
 const SizeButtonPlus = styled.button`
 position:absolute;
-top:-25px;
-right:11px;
+top:-27px;
+right:15px;
 font-size:40px;
 height:24px;
 background-color:transparent;
@@ -73,7 +73,7 @@ cursor:pointer;
 const SizeButtonMinus = styled.button`
 position:absolute;
 bottom:-25px;
-right: 10px;
+right: 14px;
 font-size:40px;
 height:24px;
 transform: rotate(180deg);
