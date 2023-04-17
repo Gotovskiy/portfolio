@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useState } from "react";
 import styled from "styled-components";
-import Map from "./map";
+import CartBox from "./Works/CartBox";
 import emailjs from '@emailjs/browser';
 
 
@@ -99,7 +99,7 @@ function Contact(props) {
         {succses && "Your message has been sent. We'll get back to you soon :) "}
         </Form>
       </Left>
-      <Right><Map/></Right>
+      <Right></Right>
       </Container>
       </Section> );
 }

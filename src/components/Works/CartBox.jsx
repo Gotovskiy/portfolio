@@ -31,14 +31,14 @@ transition: width 0.3s ease-in-out, height 0.3s 0.4s ease-in-out;
 }  
 
 &:hover> div >.order-btn {
-margin: 0 30px;
+ margin: 0 30px;
  border: 1px;
  opacity: 1;
  visibility: visible;
- transition: opacity 0.4s 0.5s ease-in-out , margin 0.1s 0.5s  linear;
+ transition: opacity 0.4s 0.5s ease-in-out , margin 0.25s  ease-in-out;
 }
 &:not(:hover) div >.order-btn {
-  transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out , margin 0.4s 0.5s  ease-in-out;
 }  
 &:not(:hover){
 transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
@@ -99,8 +99,8 @@ scrollbar-width: thin;
 
 
 const EmptyCart = styled.div`
- width:240px;
- height:55px; 
+ width:300px;
+ height:60px; 
  overflow: hidden;
  margin: 20px auto;
  align-items: center;
