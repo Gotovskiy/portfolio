@@ -71,7 +71,7 @@ flex: 1;
 `
 
 
-function Contact({}, innerRef) {
+function Contact(props) {
   const form = useRef();
   const [succses,setSuccses] = useState(null);
   const handleSubmit = (e) => {
@@ -85,10 +85,11 @@ function Contact({}, innerRef) {
       console.log(error.text);
     });
   }
-    return ( <Section innerRef={innerRef}>
+    return ( <Section >
       
       <Container>
       <Left>
+        <h1 ref={props.MyRef}></h1>
         <Form onSubmit={handleSubmit} ref={form}>
         <Title >Create order</Title>
         <Input placeholder="Name" name="name"/>

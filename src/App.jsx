@@ -20,7 +20,8 @@ function App() {
     }
   `
   const handleClickScroll = () => {
-    innerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    console.log(innerRef)
+    innerRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const innerRef = useRef(null)
   return (
@@ -28,7 +29,7 @@ function App() {
       <Hero/>
       <Who/>
       <Works handleClickScroll= {handleClickScroll}/>
-      <Contact innerRef={innerRef}/>
+      <Contact MyRef={innerRef}/>
     </Container>
   )
 }

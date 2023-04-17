@@ -31,11 +31,11 @@ transition: width 0.3s ease-in-out, height 0.3s 0.4s ease-in-out;
 }  
 
 &:hover> div >.order-btn {
- height: 100%;
+margin: 0 30px;
  border: 1px;
  opacity: 1;
  visibility: visible;
- transition: opacity 0.4s 0.5s ease-in-out;
+ transition: opacity 0.4s 0.5s ease-in-out , margin 0.1s 0.5s  linear;
 }
 &:not(:hover) div >.order-btn {
   transition: opacity 0.4s ease-in-out;
@@ -45,45 +45,23 @@ transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
 }
 `
 const CartSum = styled.div`
-width: 40px;
+width: 20%;
+height: 30px;
+line-height:30px;
 text-align: right;
-display: flex;
-align-items: right;
-`
-const CartContainer = styled.div`
- margin:10px auto;
- width:90%;
- height:10%;
- min-width: 80px;
- min-height: 30px;
- display:flex;
- align-items: center;
- justify-content:space-between;
-`
-
-const CartItems = styled.div`
-transition: scrollbar-color 0.1s 0.8s linear;
-width:100%;
-height:100%;
-margin-bottom:25px;
-overflow-y:auto;
-overflow-x:hidden;
-scrollbar-color: rgba(255, 255, 255, 0) transparent;
-scrollbar-width: thin;
 `
 const Icon = styled.i`
-width: 30px;
+width: 20%;
 height: 30px;
 cursor: pointer;
 display: flex;
 align-items: center;
 `
 const OrderButton = styled.button`
- width: 130px;
+ width: 40%;
  height: 100%;
  border: 0px;
  overflow: hidden;
- margin: 0 auto;
  opacity: 0;
  visibility: 0;
  background-color:#da4ea2;
@@ -96,6 +74,29 @@ filter: drop-shadow( 0 0 40px rgb(218, 78, 162));
 :active {
   background-color:rgb(206, 56, 146);
 }`
+
+
+const CartContainer = styled.div`
+ margin:10px auto;
+ width:90%;
+ height:10%;
+ min-width: 80px;
+ min-height: 30px;
+ display:flex;
+ align-items: center;
+`
+
+const CartItems = styled.div`
+transition: scrollbar-color 0.1s 0.8s linear;
+width:100%;
+height:100%;
+margin-bottom:25px;
+overflow-y:auto;
+overflow-x:hidden;
+scrollbar-color: rgba(255, 255, 255, 0) transparent;
+scrollbar-width: thin;
+`
+
 
 const EmptyCart = styled.div`
  width:240px;
@@ -113,7 +114,7 @@ function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice, handleCli
 return ( <Cart>
       <CartContainer>
       <Icon className="fa-solid fa-cart-shopping"/ >
-      <OrderButton className="order-btn" onClick={() => {handleClickScroll}}>Create Order</OrderButton>  
+      <OrderButton className="order-btn" onClick={() => {handleClickScroll()}}>Create Order</OrderButton>  
       <CartSum>{UserCartPrice}$</CartSum>
       </CartContainer> 
       <CartItems className="CartItems">
