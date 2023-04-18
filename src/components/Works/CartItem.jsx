@@ -6,13 +6,14 @@ display:flex;
 align-items:center;
 text-align:center;
 margin-right:10px;
-width:95%;
-height:25%; 
+width:270px;
+height:55px; 
 margin-top:2px;
 justify-content:space-between;
-background-color:#00000026;
+background-color:#0000003e;
 border:none;
-padding:5px;
+padding:10px;
+overflow: hidden;
 `
 const ItemBox = styled.div`
 height:100%;
@@ -22,7 +23,7 @@ justify-content:center;
 margin-top:auto;
 `
 const CartImg = styled.img`
-height:95%;
+height:90%;
 `
 const ItemName = styled.h1`
  width:100%;
@@ -75,7 +76,7 @@ const DeleteButton = styled.button`
     border:none;
     background-color:transparent;
     color:white;
-    font-size:10px;
+    font-size:12px;
     cursor:pointer;
 `
 

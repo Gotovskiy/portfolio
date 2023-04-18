@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import styled from "styled-components";
-import Map from "./map";
+import CartBox from "./Works/CartBox";
 import emailjs from '@emailjs/browser';
 
 
@@ -71,14 +71,11 @@ flex: 1;
 `
 
 
-
-function Contact() {
+function Contact(props) {
   const form = useRef();
   const [succses,setSuccses] = useState(null);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     emailjs.sendForm('service_4l84xyj', 'template_96slbx8', form.current, 'HpTACSndSnSlSgBNt')
     .then((result) => {
         console.log(result.text);
@@ -88,12 +85,13 @@ function Contact() {
       console.log(error.text);
     });
   }
-    return ( <Section>
+    return ( <Section >
       
       <Container>
       <Left>
+        <h1 ref={props.MyRef}></h1>
         <Form onSubmit={handleSubmit} ref={form}>
-        <Title>Contact Us</Title>
+        <Title >Create order</Title>
         <Input placeholder="Name" name="name"/>
         <Input placeholder="Email" name="email"/>
         <TextArea placeholder="Write your message" rows={10} name="message"/>
@@ -101,10 +99,9 @@ function Contact() {
         {succses && "Your message has been sent. We'll get back to you soon :) "}
         </Form>
       </Left>
-      <Right><Map/></Right>
+      <Right></Right>
       </Container>
-      
       </Section> );
 }
 
-export default Contact;
+export default forwardRef(Contact) ;
