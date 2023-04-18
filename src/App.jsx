@@ -20,7 +20,6 @@ function App() {
     }
   `
   const handleClickScroll = () => {
-    console.log(innerRef)
     innerRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const innerRef = useRef(null)
