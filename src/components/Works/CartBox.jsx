@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import CartItem from "./CartItem";
-
-const Cart = styled.div`
+import { useSelector } from "react-redux";
+const UserCart = styled.div`
 position:absolute;
 top:30px;
 right:-100px;
@@ -43,6 +43,9 @@ transition: width 0.3s ease-in-out, height 0.3s 0.4s ease-in-out;
 &:not(:hover){
 transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
 }
+@media only screen and (max-width:768px) {
+    display: none;
+    }
 `
 const CartSum = styled.div`
 width: 20%;
@@ -86,7 +89,7 @@ const CartContainer = styled.div`
  align-items: center;
 `
 
-const CartItems = styled.div`
+const AddedItems = styled.div`
 transition: scrollbar-color 0.1s 0.8s linear;
 width:100%;
 height:100%;
@@ -109,21 +112,22 @@ const EmptyCart = styled.div`
 
 
 
-function CartBox({UserCart , DeleteItem , ChangeCount , UserCartPrice, handleClickScroll}) {
-  console.log(UserCart)
-return ( <Cart>
+function CartBox({handleClickScrollToContact}) {
+  const CartItems = useSelector(state => state.cart.CartItems)
+  const CartPrice = useSelector(state => state.cart.CartPrice)
+return ( <UserCart>
       <CartContainer>
       <Icon className="fa-solid fa-cart-shopping"/ >
-      <OrderButton className="order-btn" onClick={() => {handleClickScroll()}}>Create Order</OrderButton>  
-      <CartSum>{UserCartPrice}$</CartSum>
+      <OrderButton className="order-btn" onClick={() => {handleClickScrollToContact()}}>Create Order</OrderButton>  
+      <CartSum>{CartPrice}$</CartSum>
       </CartContainer> 
-      <CartItems className="CartItems">
-        {UserCart.length!==0 ?
-        UserCart.map((item) => {return  <CartItem item={item} DeleteItem={DeleteItem} ChangeCount={ChangeCount}/>}):
+      <AddedItems className="CartItems">
+        {CartItems.length!==0 ?
+        CartItems.map((item) => {return  <CartItem item={item} key={item.id}/>}):
         <EmptyCart>Your cart is empty</EmptyCart>
       }
-        </CartItems> 
-</Cart> );
+        </AddedItems> 
+</UserCart> );
 }
 
 export default CartBox;

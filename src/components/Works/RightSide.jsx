@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import WebDisign from "../WebDising";
+import WebDisign from "./WebDising";
 import CartBox from "./CartBox";
 
 const Right = styled.div`
 flex:1;
 position:relative;
+margin-bottom: 30px;
 `
 
 const BuyContainer = styled.div`
@@ -17,6 +18,15 @@ top:85%;
 right:40%;
 justify-content: space-between;
 align-items: center;
+@media only screen and (max-width:768px) {
+  top:-5%;
+  right: auto;
+  width:100vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  justify-content: center;
+  gap: 10px;
+    }
 `
 const Buy = styled.button`
 background-color:#da4ea2;
@@ -92,7 +102,7 @@ cursor:pointer;
 
 
 
-function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice, UserCart, DeleteItem, ChangeCount, UserCartPrice, handleClickScroll}) {
+function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice, handleClickScrollToContact}) {
     return ( 
     <Right>     
         <WebDisign ChosedModel= {model}/>
@@ -108,7 +118,7 @@ function RightSide({model,IncSize,DecSize,modelSize,CartCheck,modelPrice, UserCa
        </Buy>
          <Price>{modelPrice}$</Price>
          </BuyContainer>
-         <CartBox handleClickScroll={handleClickScroll} UserCart={UserCart}  DeleteItem={DeleteItem}  ChangeCount={ChangeCount} UserCartPrice={UserCartPrice}/>
+         <CartBox handleClickScrollToContact={handleClickScrollToContact}/>
      </Right> );
 }
 

@@ -5,6 +5,9 @@ const Left = styled.div`
     flex:1;
     display: flex;
     align-items: center;
+    @media only screen and (max-width:768px) {
+      
+    }
   `
   const List = styled.div`
   list-style: none;
@@ -57,6 +60,9 @@ padding-top:10px;
    width:100%;
    filter: drop-shadow( 0 0 40px #00d9ff);
   }}
+  @media only screen and (max-width:768px) {
+    font-size: 50px;
+    }
 
 `
 

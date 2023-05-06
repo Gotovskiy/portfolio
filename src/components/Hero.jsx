@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import { Canvas } from "@react-three/fiber";
@@ -10,22 +10,40 @@ const Section = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    @media only screen and (max-width:768px) {
+    height: 100vh;
+  }
   `
 const Container = styled.div`
   height: 100vh;
   width: 1400px;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width:768px) {
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+  }
 `  
 const Left = styled.div`
 flex:2;
 display:flex;
 flex-direction:column;
 justify-content:center;
-gap:20px;`
+gap:20px;
+@media only screen and (max-width:768px) {
+    flex:1;
+    justify-content: left;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    }`
 
 const Title = styled.h1`
-font-size:74px;`  
+font-size:74px;
+@media only screen and (max-width:768px) {
+    font-size: 50px;
+    }`  
 
 const WhatWeDo = styled.div`
 display:flex;
@@ -41,8 +59,11 @@ const SubTitle = styled.h2`
 color:#da4ea2;`  
 
 const Desc = styled.p`
-font-size:24px;
-color:lightgrey;`
+font-size:22px;
+color:lightgrey;
+@media only screen and (max-width:768px) {
+    font-size: 20px;
+    }`
 
 const Button = styled.button`
 background-color:#da4ea2;
@@ -52,7 +73,7 @@ width:100px;
 padding:10px;
 border-radius:5px;
 border: none;
-cursor:pointer;`  
+cursor:pointer;`
 
 const Right = styled.div`
 flex:3;
@@ -64,6 +85,9 @@ animation: animate 2s infinite ease alternate;
     transform:translateY(20px);
   }
 }
+@media only screen and (max-width:768px) {
+    flex:1;
+    }
 `
 const Img = styled.img`
 width:800px;
@@ -74,21 +98,36 @@ top:0;
 bottom:0;
 left:0;
 right:0;
-margin:auto;`    
+margin:auto;
+@media only screen and (max-width:768px) {
+    width:50vw;
+    height: 50vh;
+    }
+`    
 
-function  Hero () {
+function  Hero ({handleClickScrollToWho, handleClickScrollToWorks, handleClickScrollToContact}) {
+ const [Quote , setQuote] = useState("Wait a bit");
+ async function getQuotes() {
+   const Quotes = await fetch("https://api.jsonbin.io/v3/b/644f29d0b89b1e229994ad9a").then(item => item.json())
+   setQuote(Quotes.record.Quotes[Math.floor(Math.random() * (2))])
+  }
+useEffect(()=> {
+  getQuotes()
+}, [])
+   
     
+  
     return ( <Section>
-      <Navbar/>
+      <Navbar handleClickScrollToWho= {handleClickScrollToWho} handleClickScrollToWorks={handleClickScrollToWorks} handleClickScrollToContact= {handleClickScrollToContact}/>
       <Container>
         <Left>
-          <Title>Think. Make. Solve.</Title>
+          <Title>Hey, I'm Egor.</Title>
           <WhatWeDo>
             <Line />
-            <SubTitle>What we Do</SubTitle>
+            <SubTitle>Random quote</SubTitle>
           </WhatWeDo>
-          <Desc>we enjoy creating delightful, human-centered digital experiences.</Desc>
-          <Button>Learn More</Button>
+          <Desc>{Quote}</Desc>
+          <Button onClick={()=>{handleClickScrollToWho()}}>About me</Button>
         </Left>
         <Right>
         <Canvas>

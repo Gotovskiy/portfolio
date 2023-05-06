@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 import { useState } from "react";
@@ -8,35 +8,46 @@ import SneakerThree from "../Models/SneakerThree"
 import SneakerFour from "../Models/SneakerFour"
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../../store/cartSlice";
+import { changeCount } from "../../store/cartSlice";
 
 const Section = styled.div`
     height: 100vh;
     scroll-snap-align: center;
     display: flex;
     justify-content: center;
+    @media only screen and (max-width:768px) {
+  height: 100vh;
+    }
+    
   `
   const Container = styled.div`
   width: 1400px;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width:768px) {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+    flex-direction: column;
+    }
 `
 
 const data = [
-  {name:"Origin", id:1 , chosed:false },
-  {name:"Crown", id:4 , chosed:false },
-  {name:"Republic", id:2 , chosed:false },
-  {name:"Thread", id:3 ,  chosed:false },
+  {name:"Origin", id:1},
+  {name:"Crown", id:4},
+  {name:"Republic", id:2},
+  {name:"Thread", id:3 },
 ]
 
-function Works ({handleClickScroll}) {
+function Works ({worksref , handleClickScrollToContact}) {
   const [model , SetModel] = useState(<SneakerOne/>);
   const [modelPrice , SetPrice] = useState(99);
   const [modelSize , SetSize] = useState(42);
   const [activeName , SetActive] = useState("Origin");
-  const [UserCartPrice , SetCartPrice] = useState(0);  
-  const [UserCart , SetCart] = useState([]);
+  const dispatch = useDispatch()
+  const CartItems = useSelector(state => state.cart.CartItems)
 
   function IncSize () {
     if (modelSize < 47){SetSize(modelSize+1)}
@@ -46,74 +57,35 @@ function Works ({handleClickScroll}) {
     if (modelSize > 36){SetSize(modelSize-1)}
   }
 
-  function DeleteItem (id) {
-  let deletedItem = UserCart.filter(item => item.id==id);
-  const newPrice = UserCartPrice - deletedItem[0].price * deletedItem[0].count;
-  SetCartPrice(newPrice);
-  SetCart(
-   UserCart.filter(item => item.id!=id)) 
-  }
-
   function CartCheck () {
-   if (UserCart.length === 0 ){
+    let itemFound = false;
+   if (CartItems.length === 0 ){
     AddtoCart();
    }
    else {
-     UserCart.map((item) => {
+     CartItems.map((item) => {
       if (Object.values(item).includes(activeName) && Object.values(item).includes(modelSize)) {
-        ChangeCount(item.id , "inc");
-        return;
-      }
-      else {
+        dispatch(changeCount({id:item.id , operation:"inc"}))
+        itemFound = true;
+      }})
+      if (!itemFound) {
         AddtoCart();
       }
-     })
    } 
   }
 
   function AddtoCart () {
     const itemImageSrc = `../img/${activeName}.png`
-    SetCart([...UserCart , {
+    const newItem = {
       id:Date.now(),
       name:activeName , 
       price:modelPrice,
       size:modelSize,
       img:itemImageSrc,
-      count:1}])
-    const newPrice = UserCartPrice + modelPrice
-    console.log(UserCart)
-    SetCartPrice(newPrice)
+      count:1}
+      dispatch(addCartItem(newItem))
   }
 
-    function ChangeCount (id , operation) {
-      const index = UserCart.findIndex((item) => item.id === id);
-      const old_obj = UserCart[index];
-      let newItem = {};
-      let newCount = old_obj.count;
-      let newPrice = UserCartPrice;
-      if (operation == "inc") {
-        ++newCount
-        newItem = { ...old_obj, count: newCount };
-        newPrice += old_obj.price; 
-        SetCartPrice(newPrice)
-      }
-      else if (old_obj.count !== 1 && operation == "dec") {
-        --newCount;
-        newItem = { ...old_obj, count: newCount };
-        newPrice -= old_obj.price; 
-        SetCartPrice(newPrice)
-      }
-      else {
-        return
-      }
-      const newArr = [
-        ...UserCart.slice(0, index),
-        newItem,
-        ...UserCart.slice(index + 1),
-      ]
-      console.log(newArr)
-      SetCart(newArr)
-    }
 
   function ChoseModel (name)  {
     switch (name) {
@@ -141,27 +113,25 @@ function Works ({handleClickScroll}) {
 
   }}
 
-    return ( <Section>
+    return ( 
+    <Section>
+      <h1 ref={worksref}></h1>
       <Container>
         <LeftSide 
         data={data} 
         ChoseModel={ChoseModel} 
         activeName={activeName}/>
         <RightSide
-        handleClickScroll={handleClickScroll} 
+        handleClickScrollToContact={handleClickScrollToContact} 
         model={model} 
         IncSize={IncSize} 
         DecSize={DecSize} 
         modelSize={modelSize} 
         CartCheck={CartCheck} 
-        modelPrice={modelPrice} 
-        UserCart={UserCart}  
-        DeleteItem={DeleteItem}  
-        ChangeCount={ChangeCount} 
-        UserCartPrice={UserCartPrice}/>
+        modelPrice={modelPrice} />
       </Container>
       
     </Section> );
 }
 
-export default  Works;
+export default forwardRef (Works);
