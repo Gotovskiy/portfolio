@@ -1,4 +1,4 @@
-import Contact from "./components/Contact"
+import Contact from "./components/Contact/Contact"
 import Hero from "./components/Hero"
 import Who from "./components/Who"
 import Works from "./components/Works/Works"
@@ -9,6 +9,7 @@ import { useRef } from "react"
 function App() {
   const Container = styled.div`
     height: 100vh;
+    margin: 0;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     overflow-y: auto;
@@ -19,16 +20,24 @@ function App() {
       display: none;
     }
   `
-  const handleClickScroll = () => {
-    innerRef.current.scrollIntoView({ behavior: 'smooth' });
+  const handleClickScrollToContact = () => {
+    contactref.current.scrollIntoView({ behavior: 'smooth' });
   };
-  const innerRef = useRef(null)
+  const handleClickScrollToWho = () => {
+    whoref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+  const handleClickScrollToWorks = () => {
+    worksref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+  const contactref = useRef(null);
+  const whoref = useRef(null);
+  const worksref = useRef(null);
   return (
     <Container>
-      <Hero/>
-      <Who/>
-      <Works handleClickScroll= {handleClickScroll}/>
-      <Contact MyRef={innerRef}/>
+      <Hero handleClickScrollToWho= {handleClickScrollToWho} handleClickScrollToWorks={handleClickScrollToWorks} handleClickScrollToContact= {handleClickScrollToContact}/>
+      <Who whoref={whoref} handleClickScrollToWorks={handleClickScrollToWorks}/>
+       <Works worksref={worksref} handleClickScrollToContact= {handleClickScrollToContact}/>
+      <Contact contactref={contactref}/>
     </Container>
   )
 }

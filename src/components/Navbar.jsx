@@ -4,6 +4,9 @@ import styled from "styled-components";
 const Section = styled.div`
   display:flex;
   justify-content:center;
+  @media only screen and (max-width:768px) {
+    width: 100vw;
+  }
   `
 
 const Containter = styled.div`
@@ -11,46 +14,51 @@ width: 1400px;
 display: flex;
 justify-content: space-between;
 padding: 10px 0px;
-scroll-snap-align: center;`
+scroll-snap-align: center;
+@media only screen and (max-width:768px) {
+    width: 100%;
+    margin-bottom: 10vh;
+    }`
+
 const Logo = styled.img`
 height:100px;
 border: 0px solid #fff;
 border-radius:100px;
 padding:-20px;
-filter: drop-shadow(0 0 40px #c9bbfa);`
+filter: drop-shadow(0 0 40px #c9bbfa);
+@media only screen and (max-width:768px) {
+    display: none;
+    }`
 
 const Links = styled.div`
 display: flex;
 align-items:center;
 gap:20px;
+@media only screen and (max-width:768px) {
+    padding: 10px;
+    margin: 0 auto;
+    }
+
 
 `
 const List = styled.ul`
 display:flex;
 gap: 20px;
-list-style:none;`
+list-style:none;
+@media only screen and (max-width:768px) {
+    width: 100%;
+    
+  }`
+
 const ListItem = styled.li`
-cursor:pointer;`
-
-const Button = styled.button`
 cursor:pointer;
-padding:10px;
-background-color:#da4ea2;
-color:white;
-border:none;
-border-radius:5px;`
+@media only screen and (max-width:768px) {
+    border-bottom:2px solid rgba(255, 255, 255, 0.39);
+  }`
 
-const Icons = styled.div`
-display:flex;
-align-items:center;
-gap:20px;`
 
-const Icon = styled.i`
-    width: 20px;
-    cursor: pointer;
-`
 
-function Navbar() {
+function Navbar({handleClickScrollToWho, handleClickScrollToWorks, handleClickScrollToContact}) {
     return (
     <Section>
         <Containter>
@@ -58,15 +66,11 @@ function Navbar() {
         <Logo src="./img/logo.png"/>
         <List>
             <ListItem>Home</ListItem>
-            <ListItem>Studio</ListItem>
-            <ListItem>Works</ListItem>
-            <ListItem>Contact</ListItem>
+            <ListItem onClick={() => handleClickScrollToWho()} >About me</ListItem>
+            <ListItem onClick={() => handleClickScrollToWorks()} >Shop</ListItem>
+            <ListItem onClick={() => handleClickScrollToContact()}>Contact</ListItem>
         </List>
         </Links>
-        <Icons>
-        <Icon className="fa-solid fa-magnifying-glass"></Icon>
-            <Button>Hire now</Button>
-        </Icons>
         </Containter>
     </Section> );
 }

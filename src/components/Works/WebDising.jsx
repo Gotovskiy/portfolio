@@ -5,7 +5,7 @@ import { OrbitControls, Stage} from "@react-three/drei";
 function WebDisign({ChosedModel}) {
     return ( 
     <Canvas >
-    <OrbitControls autoRotate={true} autoRotateSpeed={0.4} enableZoom={false}/>
+    <OrbitControls autoRotate={true} autoRotateSpeed={0.4} enablePan={false} enableZoom={false}/>
     <Stage intensity={0.1} environment={"sunset"}>{ChosedModel}</Stage>
     </Canvas > );
 }
