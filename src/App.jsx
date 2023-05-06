@@ -9,6 +9,7 @@ import { useRef } from "react"
 function App() {
   const Container = styled.div`
     height: 100vh;
+    margin: 0;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     overflow-y: auto;

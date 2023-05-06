@@ -21,9 +21,10 @@ const Container = styled.div`
   justify-content: space-between;
   @media only screen and (max-width:768px) {
     align-items: center;
-    width: 100%;
+    width: 100vw;
     justify-content: center;
     flex-direction: column;
+    box-sizing: border-box;
   }
 `  
 const Left = styled.div`
@@ -34,9 +35,12 @@ justify-content:center;
 gap:20px;
 @media only screen and (max-width:768px) {
     flex:1;
+    box-sizing: border-box;
+    width: 95%;
     justify-content: left;
-    margin-left: 10px;
     margin-bottom: 50px;
+    gap:10px;
+    box-sizing: border-box;
     }`
 
 const Title = styled.h1`
@@ -63,6 +67,8 @@ font-size:22px;
 color:lightgrey;
 @media only screen and (max-width:768px) {
     font-size: 20px;
+    min-height: 50px;
+    min-width: 95vw;
     }`
 
 const Button = styled.button`

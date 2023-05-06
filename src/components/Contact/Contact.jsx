@@ -98,11 +98,9 @@ function Contact(props) {
     e.preventDefault();
     emailjs.sendForm('service_4l84xyj', 'template_96slbx8', form.current, 'HpTACSndSnSlSgBNt')
     .then((result) => {
-        console.log(result.text);
         setSuccses(true)
     }, (error) => {
       setSuccses(false)
-      console.log(error.text);
     });
   }
 return ( <Section >

@@ -27,17 +27,18 @@ const Container = styled.div`
     width: 100%;
     justify-content: center;
     flex-direction: column;
-    margin-left:10px;
   }
 `  
 const Left = styled.div`
-flex:2;
+flex:1;
 display:flex;
 flex-direction:column;
 justify-content:center;
 gap:20px;
 @media only screen and (max-width:768px) {
-    flex:1;
+    flex:1; 
+    box-sizing: border-box;
+    width: 95%;
   }`
 
 const Title = styled.h1`
@@ -77,23 +78,14 @@ border: none;
 cursor:pointer;`  
 
 const Right = styled.div`
-flex:3;
+flex:1;
 position:relative;
 @media only screen and (max-width:768px) {
     display: none;
+    flex:3;
   }
 
-`
-const Img = styled.img`
-width:800px;
-height:600px;
-object-fit:contain;
-position:absolute;
-top:0;
-bottom:0;
-left:0;
-right:0;
-margin:auto;`    
+` 
 
 function  Who (props) {
     

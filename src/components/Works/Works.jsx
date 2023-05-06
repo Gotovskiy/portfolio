@@ -9,8 +9,8 @@ import SneakerFour from "../Models/SneakerFour"
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../../store/cartSlice";
-import { changeCount } from "../../store/cartSlice";
+import { addCartItem , changeCount } from "../../store/cartSlice";
+
 
 const Section = styled.div`
     height: 100vh;
@@ -29,6 +29,7 @@ const Section = styled.div`
   @media only screen and (max-width:768px) {
     width: 100%;
     height: 100%;
+    gap: 10vh;
     margin-bottom: 20px;
     flex-direction: column;
     }

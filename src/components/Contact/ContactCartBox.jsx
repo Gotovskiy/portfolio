@@ -14,7 +14,7 @@ flex-direction: column;
 background-color:#0000003e;
 @media only screen and (max-width:768px) {
   height: 600px;
-  width: 90vw;
+  width: 97vw;
 }
 `
 const EmptyCart = styled.h1`

@@ -15,7 +15,8 @@ border:none;
 padding:10px;
 overflow: hidden;
 @media only screen and (max-width:768px) {
-  height: 25%;
+  padding-left: 0px;
+  width: 95%;
   
 }
 `
@@ -86,9 +87,14 @@ const DeleteButton = styled.button`
 const Imgbox = styled.div`
 height: 90%;
 position: relative;
+display: flex;
+align-items: center;
 `
 const ModelImg = styled.img`
 height:100%;
+@media only screen and (max-width:768px) {
+height: 10vh;
+}
 `
 const SizeOnImg = styled.h1`
   font-size: 20px;
