@@ -14,7 +14,6 @@ border: 2px solid rgb(255, 255, 255 , 0.4);
 border-radius:50px;
 text-align:center;
 padding:0 20px;
-cursor:pointer;
 &:hover {
 width:300px;
 height:320px;
@@ -56,7 +55,6 @@ text-align: right;
 const Icon = styled.i`
 width: 20%;
 height: 30px;
-cursor: pointer;
 display: flex;
 align-items: center;
 `
@@ -98,6 +96,11 @@ overflow-y:auto;
 overflow-x:hidden;
 scrollbar-color: rgba(255, 255, 255, 0) transparent;
 scrollbar-width: thin;
+&:-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color:  #ffffff89 transparent;
+}
 `
 
 

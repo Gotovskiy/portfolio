@@ -64,6 +64,7 @@ const CountButton = styled.button`
     border:none;
     display:flex;
     justify-content:center;
+    cursor: pointer;
 `
 const Count = styled.h2`
 font-size:14px;   
