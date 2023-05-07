@@ -31,6 +31,11 @@ const shake = keyframes`
     transform: translate3d(4px, 0, 0);
   }
 `
+const spinner = keyframes` 
+  100% {
+    transform: rotate(360deg);
+  }`
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -116,8 +121,19 @@ border: 2px solid #da4ea2;
 background-color: #812d60;
 cursor: default;
 }
-`
 
+`
+const Loader = styled.div`
+    margin: 0 auto;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -0.125em;
+    border: 0.2em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: .75s linear infinite ${spinner};
+    animation: .75s ${spinner} linear infinite ;
+`
 
 const Right = styled.div`
 flex: 1;
@@ -134,25 +150,34 @@ display: flex;
 function Contact(props) {
   const form = useRef();
   const [succses,setSuccses] = useState(null);
+  const [loading , setLaod] = useState(false);
+  const CartItems = useSelector(state => state.cart.CartItems)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (succses == true) {
       return;}
     const checked = inputCheck() 
     if (checked){
-    form.current[2]._valueTracker.setValue(form.current[2]._valueTracker.getValue() + "SETSIU");
+      setLaod(true);
+    const templete_obj = {
+    name: form.current[0]._valueTracker.getValue(),
+    message: form.current[2]._valueTracker.getValue(),
+    email: form.current[1]._valueTracker.getValue(),
+    order_str: JSON.stringify(CartItems)
+    }
     console.log(form.current[2]._valueTracker.getValue())
-    emailjs.sendForm('service_4l84xyj', 'template_96slbx8', form.current, 'HpTACSndSnSlSgBNt')
+    emailjs.send('service_4l84xyj', 'template_96slbx8', templete_obj, 'HpTACSndSnSlSgBNt')
     .then((result) => {
         setSuccses(true)
+        setLaod(false);
     }, (error) => {
       setSuccses(false)
+        setLaod(false);
     });}
     else return;
   }
 
  const inputCheck = () => {
-  console.log(form.current[2])  
   const classStr = " wrongInput";
   const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
   let error = false;
@@ -190,7 +215,7 @@ return ( <Section >
     <Input placeholder="Name" name="name"/>
     <Input placeholder="Email" name="email"/>
     <TextArea placeholder="Your wishes" rows={10} name="message"  />
-    <Button className={succses?"disabled":"enabled"} type="submit">Send</Button>
+    <Button className={(succses?"disabled":"")} type="submit">{loading?<Loader/>:"Send"}</Button>
     {succses && "Your message has been sent. We'll contact you within 10 minutes"}
     </Form>
   </Left>

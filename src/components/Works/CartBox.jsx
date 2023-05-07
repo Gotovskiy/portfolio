@@ -96,6 +96,11 @@ overflow-y:auto;
 overflow-x:hidden;
 scrollbar-color: rgba(255, 255, 255, 0) transparent;
 scrollbar-width: thin;
+&:-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color:  #ffffff89 transparent;
+}
 `
 
 
