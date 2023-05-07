@@ -14,7 +14,6 @@ border: 2px solid rgb(255, 255, 255 , 0.4);
 border-radius:50px;
 text-align:center;
 padding:0 20px;
-cursor:pointer;
 &:hover {
 width:300px;
 height:320px;
@@ -56,7 +55,6 @@ text-align: right;
 const Icon = styled.i`
 width: 20%;
 height: 30px;
-cursor: pointer;
 display: flex;
 align-items: center;
 `
