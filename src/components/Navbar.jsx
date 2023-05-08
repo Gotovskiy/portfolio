@@ -7,6 +7,9 @@ const Section = styled.div`
   @media only screen and (max-width:768px) {
     width: 100vw;
   }
+  @media only screen and (max-width:1600px) {
+    width: 100vw;
+  }
   `
 
 const Containter = styled.div`
@@ -17,7 +20,7 @@ padding: 10px 0px;
 scroll-snap-align: center;
 @media only screen and (max-width:768px) {
     width: 100%;
-    margin-bottom: 10vh;
+    margin-bottom: 4vh;
     }`
 
 const Logo = styled.img`
@@ -67,7 +70,7 @@ function Navbar({handleClickScrollToWho, handleClickScrollToWorks, handleClickSc
         <List>
             <ListItem onClick={() => handleClickScrollToWho()} >About me</ListItem>
             <ListItem onClick={() => handleClickScrollToWorks()} >Shop</ListItem>
-            <ListItem onClick={() => handleClickScrollToContact()}>Contact</ListItem>
+            <ListItem onClick={() => handleClickScrollToContact()}>Send order</ListItem>
         </List>
         </Links>
         </Containter>

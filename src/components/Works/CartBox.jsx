@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const UserCart = styled.div`
 position:absolute;
 top:30px;
-right:-100px;
+right:5vw;
 display: flex;
 flex-direction:column;
 height:50px;
@@ -45,6 +45,9 @@ transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
 @media only screen and (max-width:768px) {
     display: none;
     }
+    @media only screen and (max-width:1600px) and (min-width: 768px) {
+    
+  }   
 `
 const CartSum = styled.div`
 width: 20%;
