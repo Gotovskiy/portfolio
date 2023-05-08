@@ -45,6 +45,9 @@ const Container = styled.div`
   @media only screen and (max-width:768px) {
   flex-direction: column-reverse;
     }
+    @media only screen and (max-width:1600px) and (min-width: 768px) {
+  width: 100vw;
+  }
 `
 const Left = styled.div`
  flex: 1;
@@ -55,6 +58,11 @@ const Left = styled.div`
   justify-content: center;  
   scroll-snap-align: center;
  }
+ @media only screen and (max-width:1600px) and (min-width: 768px) {
+    flex:2;
+   gap:10px;
+    box-sizing: border-box;
+  }
 `
 
 const Title = styled.h1`
@@ -88,6 +96,9 @@ padding: 20px;
   border: 2px solid red;
   animation: 1s ${shake} ease-out;
 }
+@media only screen and (max-width:1600px) and (min-width: 768px) {
+    width: 100%;
+  }
 `
 
 const TextArea = styled.textarea`
@@ -102,6 +113,8 @@ resize: none;
 }
 @media only screen and (max-width:768px) {
    height:40px; }
+   @media only screen and (max-width:1600px) and (min-width: 768px) {
+  }
     `
 
 const Button = styled.button`
@@ -142,6 +155,9 @@ display: flex;
   margin-top: 20px;
   scroll-snap-align: center;
     }
+    @media only screen and (max-width:1600px) and (min-width: 768px) {
+    flex:3;
+  }
 `
 
 

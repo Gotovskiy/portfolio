@@ -26,9 +26,12 @@ const Container = styled.div`
     flex-direction: column;
     box-sizing: border-box;
   }
+  @media only screen and (max-width:1600px) {
+    width: 100vw;
+  }
 `  
 const Left = styled.div`
-flex:2;
+flex:1;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -38,10 +41,14 @@ gap:20px;
     box-sizing: border-box;
     width: 95%;
     justify-content: left;
-    margin-bottom: 50px;
     gap:10px;
+    }
+    @media only screen and (max-width:1600px) and (min-width: 768px) {
+    flex:1;
+   gap:10px;
     box-sizing: border-box;
-    }`
+    margin-left: 5vw;
+  }`
 
 const Title = styled.h1`
 font-size:74px;
@@ -69,7 +76,8 @@ color:lightgrey;
     font-size: 20px;
     min-height: 50px;
     min-width: 95vw;
-    }`
+    }
+    `
 
 const Button = styled.button`
 background-color:#da4ea2;
@@ -85,15 +93,22 @@ const Right = styled.div`
 flex:3;
 position:relative;
 animation: animate 2s infinite ease alternate;
+@media only screen and (max-width:768px) {
+    flex: 1;
+    width: 100vw;
+  }
+@media only screen and (max-width:1600px) {
+    flex:1;
+  }
 
 @keyframes animate {
   to {
     transform:translateY(20px);
   }
 }
-@media only screen and (max-width:768px) {
-    flex:1;
-    }
+@media only screen and (max-width:1600px) and (min-width: 768px) {
+    flex:2;
+  }   
 `
 const Img = styled.img`
 width:800px;
@@ -109,6 +124,10 @@ margin:auto;
     width:50vw;
     height: 50vh;
     }
+    @media only screen and (max-width:1600px) {
+    width: 50vw;
+    height: 50vh;
+  }
 `    
 
 function  Hero ({handleClickScrollToWho, handleClickScrollToWorks, handleClickScrollToContact}) {
