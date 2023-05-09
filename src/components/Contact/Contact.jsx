@@ -11,7 +11,7 @@ const Section = styled.div`
   margin-top:300px;
   height: 200vh;
   scroll-snap-align: none;
-
+  font-size: 14px;
     }
     `
 const shake = keyframes`
@@ -84,6 +84,7 @@ border-radius: 5px;
   border: 2px solid red;
   animation: 1s ${shake} ease-out;
 }
+
 `
 
 const Form = styled.form`

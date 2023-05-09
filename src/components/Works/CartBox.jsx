@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const UserCart = styled.div`
 position:absolute;
 top:30px;
-right:5vw;
+right:-5vw;
 display: flex;
 flex-direction:column;
 height:50px;
@@ -46,7 +46,7 @@ transition: width 0.4s 0.5s ease-in-out, height 0.4s ease-in-out;
     display: none;
     }
     @media only screen and (max-width:1600px) and (min-width: 768px) {
-    
+      right:5vw;  
   }   
 `
 const CartSum = styled.div`
@@ -99,10 +99,19 @@ overflow-y:auto;
 overflow-x:hidden;
 scrollbar-color: rgba(255, 255, 255, 0) transparent;
 scrollbar-width: thin;
-&:-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color:  #ffffff89 transparent;
+::-webkit-scrollbar {
+    height: 6px;
+    width: 4px;
+    background: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #960164;
+    -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
 }
 `
 
