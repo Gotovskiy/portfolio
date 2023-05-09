@@ -15,6 +15,7 @@ background-color:#0000003e;
 @media only screen and (max-width:768px) {
   height: 600px;
   width: 97vw;
+  font-size: 14px;
 }
 `
 const EmptyCart = styled.h1`
@@ -32,15 +33,24 @@ transition: scrollbar-color 0.1s 0.8s linear;
 width:90%;
 height:100%;
 margin: 0 auto;
-margin-top: 10px;
+margin-top: 15px;
 overflow-y:auto;
 overflow-x:hidden;
 scrollbar-color: #ffffff89 transparent;
 scrollbar-width: thin;
-&:-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color:  #ffffff89 transparent;
+::-webkit-scrollbar {
+    height: 6px;
+    width: 4px;
+    background: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #960164;
+    -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
 }
 `
 const Price = styled.div`
