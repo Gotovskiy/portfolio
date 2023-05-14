@@ -66,7 +66,7 @@ function Navbar({handleClickScrollToWho, handleClickScrollToWorks, handleClickSc
     <Section>
         <Containter>
         <Links>
-        <Logo src="./img/logo.png"/>
+        <Logo src="/logo.png"/>
         <List>
             <ListItem onClick={() => handleClickScrollToWho()} >About me</ListItem>
             <ListItem onClick={() => handleClickScrollToWorks()} >Shop</ListItem>
