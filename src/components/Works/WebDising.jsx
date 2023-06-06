@@ -6,7 +6,7 @@ function WebDisign({ChosedModel}) {
     return ( 
     <Canvas >
     <OrbitControls autoRotate={true} autoRotateSpeed={0.4} enablePan={false} enableZoom={false}/>
-    <Stage intensity={0.1} environment={"apartment"}>{ChosedModel}</Stage>
+    <Stage intensity={0.1}>{ChosedModel}</Stage>
     </Canvas > );
 }
 
